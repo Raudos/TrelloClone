@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "index.min.css",
+	"sources": [
+		"index.scss",
+		"_menu.scss",
+		"_column.scss",
+		"_task.scss"
+	],
+	"names": [],
+	"mappings": "AEGA,AAAA,kBAAkB,AAAC,CACjB,OAAO,CAAE,IAAI,CAKd,AAND,AAGE,kBAHgB,CAGhB,OAAO,AAAC,CACN,MAAM,CAAE,MAAM,CACf"
+}
