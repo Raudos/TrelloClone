@@ -5,10 +5,7 @@ import { DragSource } from 'react-dnd';
 const taskSource = {
 	beginDrag(props) {
 		return props;
-	},
-  endDrag() {
-    return {hbhsadj: "vsdbhjd"};
-  }
+	}
 }
 
 function collect(connect, monitor) {

@@ -5,9 +5,10 @@ import Container from 'react-data-container';
 
 // Components
 import Column from "components/Board/Column";
+import ColumnReceiver from "components/Board/ColumnReceiver";
 
 // Other
-import { handleTaskDrop } from "redux/actions/board";
+import { handleTaskDrop, handleColumnDrop } from "redux/actions/board";
 
 @DragDropContext(HTML5Backend)
 @Container({
@@ -18,7 +19,7 @@ import { handleTaskDrop } from "redux/actions/board";
     mapStateToProps: (state, ownProps) => ({
       board: state.board
     }),
-    actions: { handleTaskDrop }
+    actions: { handleTaskDrop, handleColumnDrop }
   }
 })
 class Board extends React.Component {
@@ -30,9 +31,28 @@ class Board extends React.Component {
         {board.name}
 
         <div className="columns-container">
-          {board.columns.map((col, index) => (
-            <Column key={col.id} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
-          ))}
+
+          {board.columns.map((col, index) => {
+            if (index === board.columns.length - 1) {
+              return (
+                <React.Fragment key={col.id}>
+                  <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
+
+                  <Column key={col.id} column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
+
+                  <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} last />
+                </React.Fragment>
+              );
+            }
+
+            return (
+              <React.Fragment key={col.id}>
+                <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
+
+                <Column key={col.id} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
+              </React.Fragment>
+            );
+          })}
         </div>
       </div>
     );
