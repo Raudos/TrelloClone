@@ -38,7 +38,7 @@ class Board extends React.Component {
                 <React.Fragment key={col.id}>
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                  <Column key={col.id} column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
+                  <Column key={col.id} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
 
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} last />
                 </React.Fragment>

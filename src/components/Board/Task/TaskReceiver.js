@@ -7,7 +7,7 @@ const taskTarget = {
   drop(props, monitor, component) {
     const droppedItem = monitor.getItem();
     const receiver = props;
-
+    
     receiver.handleTaskDrop(receiver, droppedItem);
   },
   hover(props, monitor, component) {
