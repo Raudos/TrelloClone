@@ -27,7 +27,7 @@ export const seedBoard = () => {
   return (dispatch, getState) => {
     dispatch({
       type: "seedBoard",
-      data: new Board("My Board", 3, 8)
+      data: new Board("My Board", 5, 8)
     });
   };
 };

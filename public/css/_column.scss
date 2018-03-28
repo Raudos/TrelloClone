@@ -1,10 +1,67 @@
 /* main: index.scss*/
-
+$columnWidth: 270px;
 
 .columns-container {
   display: flex;
 
   .column {
-    margin: 0 20px;
+    border-radius: 3px;
+    margin: 0 5px;
+    width: $columnWidth;
+    background: $columnBackground;
+    align-self: flex-start;
+    flex-shrink: 0;
+    padding: 8px;
+
+    &.dummy {
+      background: transparent;
+    };
+
+    &.dragged {
+      background: $dragColor;
+
+      * {
+        visibility: hidden;
+      };
+    };
+
+    .title {
+      textarea {
+        background: transparent;
+        border: none;
+        border-radius: 3px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        font-weight: 700;
+        height: 18px;
+        min-height: 18px;
+        resize: none;
+        max-height: 256px;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        width: 100%;
+
+        &:focus {
+          outline: none !important;
+          border:1px solid blue;
+          box-shadow: 0 0 10px #719ECE;
+          background: white;
+        };
+      };
+    };
   };
+
+  .receiver-container {
+    position: relative;
+
+    .column-receiver {
+      position: absolute;
+      top: 0;
+      left: -100px;
+      bottom: 0;
+      width: calc(100% + 200px);
+      background: transparent;
+      z-index: 0;
+    };
+  }
 };

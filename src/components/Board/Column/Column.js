@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { DragSource } from 'react-dnd';
 
-import Task from "components/Board/Task";
-import TaskReceiver from "components/Board/TaskReceiver";
+import Task from "components/Board/Task/Task";
+import TaskReceiver from "components/Board/Task/TaskReceiver";
+import ColumnTitle from "components/Board/Column/ColumnTitle";
 
 const columnSource = {
 	beginDrag(props) {
@@ -31,12 +32,46 @@ class Columns extends React.Component {
     const { column, columnsIndex, handleTaskDrop, connectDragSource, isDragging } = this.props;
 
     if (isDragging) {
-      return connectDragSource(<div>Dragging</div>);
+      return connectDragSource(
+				<div className="column dragged">
+					<ColumnTitle title={column.name} />
+
+	        {column.tasks.map((task, index) => {
+	          if (index === column.tasks.length - 1) {
+	            return (
+	              <React.Fragment key={task.id}>
+	                <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
+
+	                <Task task={task} tasksIndex={index} columnsIndex={columnsIndex} />
+
+	                <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} last />
+	              </React.Fragment>
+	            );
+	          }
+
+	          return (
+	            <React.Fragment key={task.id}>
+	              <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
+
+	              <Task task={task} tasksIndex={index} columnsIndex={columnsIndex} />
+	            </React.Fragment>
+	          );
+	        })}
+
+	        {column.tasks.length ?
+	          null
+
+	          :
+
+	          <TaskReceiver columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} dummy />
+	        }
+				</div>
+			);
     }
 
     return connectDragSource(
       <div className="column">
-        {column.name}
+        <ColumnTitle title={column.name} />
 
         {column.tasks.map((task, index) => {
           if (index === column.tasks.length - 1) {

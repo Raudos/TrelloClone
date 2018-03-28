@@ -33,7 +33,7 @@ function collect(connect, monitor) {
 }
 
 @DropTarget("column", columnTarget, collect)
-export default class ColumnReceiver extends Component {
+class ColumnReceiver extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired
@@ -55,17 +55,24 @@ export default class ColumnReceiver extends Component {
     const { connectDropTarget, isOver } = this.props;
 
     if (isOver && this.state.showDummy) {
-      return connectDropTarget(
-        <div style={{height: "100px", width: "50px", background: "red"}}>
-
-        </div>
-      );
+      return (
+        <React.Fragment>
+          {connectDropTarget(
+            <div className="column-receiver"/>
+          )}
+          <div className="column dummy"/>
+        </React.Fragment>
+      )
     }
 
     return connectDropTarget(
-      <div style={{height: "100px", width: "50px"}}>
-
-      </div>
+      <div className="column-receiver"/>
     );
   };
 };
+
+export default props => (
+  <div className="receiver-container">
+    <ColumnReceiver {...props} />
+  </div>
+);

@@ -1,1 +1,38 @@
 /* main: index.scss*/
+
+.task {
+  background-color: $taskBackground;
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  display: block;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  text-decoration: none;
+  z-index: 1;
+  padding: 6px;
+
+  &.dummy {
+    height: 50px;
+    background-color: $dragColor;
+  };
+
+  &:hover {
+    background-color: $taskHoverBackground;
+  };
+};
+
+.task-receiver-container {
+  min-height: 6px;
+
+  .task-receiver {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 20px);
+    top: -10px;
+    background: transparent;
+    z-index: 2;
+  };
+};

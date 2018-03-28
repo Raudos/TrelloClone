@@ -5,7 +5,6 @@ import thunk from "redux-thunk";
 // Other
 import combineReducer from 'redux/reducers/index';
 
-
 const initialStoreObj = {
   board: null
 };

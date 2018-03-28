@@ -4,8 +4,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import Container from 'react-data-container';
 
 // Components
-import Column from "components/Board/Column";
-import ColumnReceiver from "components/Board/ColumnReceiver";
+import Column from "components/Board/Column/Column";
+import ColumnReceiver from "components/Board/Column/ColumnReceiver";
 
 // Other
 import { handleTaskDrop, handleColumnDrop } from "redux/actions/board";

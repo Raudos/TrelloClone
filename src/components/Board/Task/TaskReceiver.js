@@ -46,7 +46,7 @@ function collect(connect, monitor) {
 }
 
 @DropTarget("task", taskTarget, collect)
-export default class TaskReceiver extends Component {
+class TaskReceiver extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired
@@ -68,17 +68,24 @@ export default class TaskReceiver extends Component {
     const { connectDropTarget, isOver } = this.props;
 
     if (isOver && this.state.showDummy) {
-      return connectDropTarget(
-        <div style={{height: "20px", background: "red"}}>
-
-        </div>
+      return (
+        <React.Fragment>
+          {connectDropTarget(
+            <div className="task-receiver"/>
+          )}
+          <div className="task dummy"/>
+        </React.Fragment>
       );
     }
 
     return connectDropTarget(
-      <div style={{height: "20px"}}>
-
-      </div>
+      <div className="task-receiver"/>
     );
   };
 };
+
+export default props => (
+  <div className="task-receiver-container receiver-container">
+    <TaskReceiver {...props} />
+  </div>
+);
