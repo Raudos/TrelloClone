@@ -10,7 +10,7 @@ export default class Details extends React.Component {
   };
 
   handleClickOutside = e => {
-    if (this.task && !this.task.contains(event.target)) {
+    if (this.task && !this.task.contains(e.target)) {
       this.props.history.push("/");
     }
   };
