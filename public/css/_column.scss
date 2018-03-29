@@ -57,9 +57,9 @@ $columnWidth: 270px;
     .column-receiver {
       position: absolute;
       top: 0;
-      left: -100px;
+      left: -15px;
       bottom: 0;
-      width: calc(100% + 200px);
+      width: calc(100% + 30px);
       background: transparent;
       z-index: 0;
     };

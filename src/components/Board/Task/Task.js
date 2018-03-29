@@ -28,14 +28,14 @@ export default class Task extends React.Component {
 
     if (isDragging) {
 			return connectDragSource(
-				<div className="task">
+				<div className="task break-text">
 					{this.props.task.name}
 				</div>
 			);
     }
 
 		return connectDragSource(
-			<div className="task">
+			<div className="task break-text">
 				{this.props.task.name}
 			</div>
 		);

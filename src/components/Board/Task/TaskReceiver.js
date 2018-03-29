@@ -1,37 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-
+import ReactDOM from "react-dom";
 
 const taskTarget = {
   drop(props, monitor, component) {
     const droppedItem = monitor.getItem();
     const receiver = props;
-    
+
     receiver.handleTaskDrop(receiver, droppedItem);
   },
   hover(props, monitor, component) {
     const draggedItem = monitor.getItem();
     const hoveredItem = props;
+    const height = window.getComputedStyle(ReactDOM.findDOMNode(document.getElementsByClassName("column")[draggedItem.columnsIndex].querySelectorAll("div.task")[draggedItem.tasksIndex])).getPropertyValue("height");
 
     if (hoveredItem.dummy) {
       component.setState({
-        showDummy: true
+        showDummy: height
       });
     } else {
       if (hoveredItem.columnsIndex === draggedItem.columnsIndex) {
         if (hoveredItem.tasksIndex !== draggedItem.tasksIndex && hoveredItem.tasksIndex !== draggedItem.tasksIndex + 1) {
           component.setState({
-            showDummy: true
+            showDummy: height
           });
         } else if (hoveredItem.tasksIndex === draggedItem.tasksIndex + 1 && hoveredItem.last) {
           component.setState({
-            showDummy: true
+            showDummy: height
           });
         }
       } else {
         component.setState({
-          showDummy: true
+          showDummy: height
         });
       }
     }
@@ -73,7 +74,7 @@ class TaskReceiver extends Component {
           {connectDropTarget(
             <div className="task-receiver"/>
           )}
-          <div className="task dummy"/>
+          <div style={{height: this.state.showDummy}} className="task dummy"/>
         </React.Fragment>
       );
     }

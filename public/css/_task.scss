@@ -12,9 +12,10 @@
   text-decoration: none;
   z-index: 1;
   padding: 6px;
-
+  
   &.dummy {
     height: 50px;
+    margin: 6px 0;
     background-color: $dragColor;
   };
 
