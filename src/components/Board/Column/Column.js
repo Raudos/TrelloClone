@@ -29,7 +29,7 @@ class Columns extends React.Component {
   };
 
   render() {
-    const { column, columnsIndex, handleTaskDrop, connectDragSource, isDragging } = this.props;
+    const { column, columnsIndex, handleTaskDrop, connectDragSource, isDragging, match } = this.props;
 
     if (isDragging) {
       return connectDragSource(
@@ -42,7 +42,7 @@ class Columns extends React.Component {
 	              <React.Fragment key={task.id}>
 	                <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
-	                <Task task={task} tasksIndex={index} columnsIndex={columnsIndex} />
+	                <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />
 
 	                <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} last />
 	              </React.Fragment>
@@ -53,7 +53,7 @@ class Columns extends React.Component {
 	            <React.Fragment key={task.id}>
 	              <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
-	              <Task task={task} tasksIndex={index} columnsIndex={columnsIndex} />
+	              <Task task={task} match={match} tasksIndex={index} columnsIndex={columnsIndex} />
 	            </React.Fragment>
 	          );
 	        })}
@@ -79,7 +79,7 @@ class Columns extends React.Component {
               <React.Fragment key={task.id}>
                 <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
-                <Task task={task} tasksIndex={index} columnsIndex={columnsIndex} />
+                <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />
 
                 <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} last />
               </React.Fragment>
@@ -90,7 +90,7 @@ class Columns extends React.Component {
             <React.Fragment key={task.id}>
               <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
-              <Task task={task} tasksIndex={index} columnsIndex={columnsIndex} />
+              <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />
             </React.Fragment>
           );
         })}

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { DragSource } from 'react-dnd';
+import { Link } from "react-router-dom";
 
 const taskSource = {
 	beginDrag(props) {
@@ -24,7 +25,7 @@ export default class Task extends React.Component {
 		isDragging: PropTypes.bool.isRequired,
   };
   render() {
-    const { connectDragSource, isDragging } = this.props
+    const { connectDragSource, isDragging, match } = this.props
 
     if (isDragging) {
 			return connectDragSource(
@@ -36,7 +37,9 @@ export default class Task extends React.Component {
 
 		return connectDragSource(
 			<div className="task break-text">
-				{this.props.task.name}
+				<Link to={`${match.url}${this.props.task.id}`}>
+					{this.props.task.name}
+				</Link>
 			</div>
 		);
   };

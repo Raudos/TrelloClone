@@ -1,0 +1,58 @@
+/* main: index.scss*/
+
+$buttonHeight: 30px;
+
+.board-details {
+  display: block;
+  padding: 8px 4px 8px 8px;
+  flex: 0 0 100%;
+
+  h1 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0;
+  };
+
+  .board-details-button {
+    transition: .1s ease;
+    background: transparent;
+    border-radius: 3px;
+    color: white;
+    display: inline-block;
+    min-width: 30px;
+    min-height: $buttonHeight;
+    padding: 0 8px;
+    margin: 0 4px;
+    cursor: pointer;
+
+    * {
+      line-height: $buttonHeight;
+    }
+
+    &:hover {
+      background: rgba(0,0,0,.15);
+    };
+
+    &:not(:first-child):not(:last-child) {
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 10%;
+        right: -4px;
+        width: 1px;
+        bottom: 10%;
+        background: white;
+        opacity: 0.8;
+      }
+    };
+
+    i {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      };
+    };
+  }
+};

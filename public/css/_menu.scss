@@ -1,1 +1,79 @@
 /* main: index.scss*/
+
+.menu {
+  position: relative;
+  background: rgba(0,0,0,.15);
+  overflow: hidden;
+  padding: 5px 8px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+
+  img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+};
+
+.menu-button {
+  transition: .1s ease;
+  background: hsla(0,0%,100%,.3);
+  border-radius: 3px;
+  color: white;
+  display: inline-block;
+  font-weight: 700;
+  line-height: 30px;
+  margin-right: 8px;
+  min-width: 30px;
+  padding: 0 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #444849;
+  };
+
+  &:last-child {
+    margin-right: 0;
+  };
+
+  i {
+    margin-right: 8px;
+  };
+};
+
+.menu-search {
+  background: hsla(0,0%,100%,.3);
+  border-radius: 3px;
+  line-height: 30px;
+  margin-right: 8px;
+  min-width: 30px;
+  padding: 0 8px;
+
+  &.toggled {
+    background: white;
+
+    i {
+      color: #444849;
+    };
+
+    input {
+      width: 300px;
+    };
+  };
+
+  i {
+    transition: 0.5s ease;
+    color: white;
+  }
+
+  input {
+    transition: 0.5s ease;
+    border: 0;
+    background: transparent;
+    margin-right: 8px;
+    width: 180px;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+};

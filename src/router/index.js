@@ -3,22 +3,14 @@ import { HashRouter as Router, Route } from "react-router-dom";
 
 // Components
 import Board from "components/Board/index";
-
-const Task = props => {
-  return (
-    <div>
-      Task
-      {props.match.params.id}
-    </div>
-  )
-}
+import Task from "components/Board/Task/Details";
 
 export default props => (
   <Router>
-    <div>
-      <Board />
+    <div className="row">
+      <Route path={'/'} component={Board} />
 
-      <Route path={`/:id`} component={Task} />
+      <Route path={`/:id`} exact component={Task} />
     </div>
   </Router>
 );

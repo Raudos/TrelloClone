@@ -6,6 +6,9 @@ class Board {
     this.id = shortid.generate();
     this.name = name || "Board";
     this.columns = this.seedColumns(colNbr, tasksNbr);
+    this.fav = false;
+    this.personal = true;
+    this.private = true;
   };
 
   seedColumns = (colNbr, tasksNbr) => {

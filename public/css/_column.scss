@@ -40,6 +40,7 @@ $columnWidth: 270px;
         overflow: hidden;
         overflow-wrap: break-word;
         width: 100%;
+        cursor: pointer;
 
         &:focus {
           outline: none !important;

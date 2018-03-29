@@ -35,6 +35,7 @@ export default class ColumnTitle extends React.Component {
           ref={textarea => this.textarea = textarea}
           value={this.state.title}
           onChange={this.handleChange}
+          onFocus={e => e.target.select()}
         />
       </div>
     );

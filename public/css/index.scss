@@ -1,5 +1,6 @@
 @import '_variables';
 @import '_menu';
+@import '_board';
 @import '_column';
 @import '_task';
 
@@ -20,4 +21,13 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+};
+
+.no-margin {
+  margin: 0 !important;
+};
+
+body {
+      background-image: url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1710/9653e5ff312b477a140e5afbb7f660ec/photo-1461727885569-b2ddec0c4328");
+      background-size: cover;
 };

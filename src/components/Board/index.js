@@ -6,6 +6,7 @@ import Container from 'react-data-container';
 // Components
 import Column from "components/Board/Column/Column";
 import ColumnReceiver from "components/Board/Column/ColumnReceiver";
+import BoardDetails from "components/Board/BoardDetails/index";
 
 // Other
 import { handleTaskDrop, handleColumnDrop } from "redux/actions/board";
@@ -24,11 +25,11 @@ import { handleTaskDrop, handleColumnDrop } from "redux/actions/board";
 })
 class Board extends React.Component {
   render() {
-    const { board } = this.props;
+    const { board, match } = this.props;
 
     return (
-      <div>
-        {board.name}
+      <React.Fragment>
+        <BoardDetails board={board} />
 
         <div className="columns-container">
 
@@ -38,7 +39,7 @@ class Board extends React.Component {
                 <React.Fragment key={col.id}>
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                  <Column key={col.id} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
+                  <Column match={match} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
 
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} last />
                 </React.Fragment>
@@ -49,12 +50,12 @@ class Board extends React.Component {
               <React.Fragment key={col.id}>
                 <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                <Column key={col.id} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
+                <Column column={col} match={match} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
               </React.Fragment>
             );
           })}
         </div>
-      </div>
+      </React.Fragment>
     );
   };
 };
