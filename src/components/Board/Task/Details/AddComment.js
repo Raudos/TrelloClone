@@ -26,7 +26,7 @@ export default class AddComment extends React.Component {
               onChange={e => this.setState({comment: e.target.value})}
             />
 
-            <div className={`button ${this.state.comment ? "confirm" : "dimmed"}`}>
+          <div className={`button ${this.state.comment ? "confirm" : "dimmed"}`} onClick={() => this.props.addComment(this.state.comment)}>
               Save
             </div>
           </div>

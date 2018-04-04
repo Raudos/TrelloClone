@@ -1,30 +1,82 @@
 import shortid from "shortid";
 const R = require('ramda');
 
+class Activity {
+  constructor(type, user) {
+    this.id = shortid.generate();
+    this.type = type;
+    this.date = new Date();
+    this.user = user;
+  };
+};
+
+class Comment extends Activity {
+  constructor(comment, user) {
+    super("comment", user);
+
+    this.comment = comment;
+  };
+};
+
+class ColumnChange extends Activity {
+  constructor(columnId, user) {
+    super("columnChange", user);
+
+    this.columnId = columnId;
+  };
+};
+
+class Task {
+  constructor(name, columnId) {
+    this.id = shortid.generate();
+    this.name = name;
+    this.activities = [new ColumnChange(columnId, "Me")];
+  };
+
+  addActivity(newActivity) {
+    if (newActivity instanceof Activity) {
+      this.activities.unshift(newActivity);
+    }
+  };
+};
+
+class Column {
+  constructor(name) {
+    this.id = shortid.generate();
+    this.name = name;
+    this.tasks = [];
+  };
+
+  addTask(name, columnId) {
+    this.tasks.push(new Task(name, this.id));
+  };
+};
+
 class Board {
   constructor(name, colNbr, tasksNbr) {
     this.id = shortid.generate();
     this.name = name || "Board";
-    this.columns = this.seedColumns(colNbr, tasksNbr);
     this.fav = false;
     this.personal = true;
     this.private = true;
+
+    this.seedColumns(colNbr, tasksNbr);
   };
 
   seedColumns = (colNbr, tasksNbr) => {
     const columns = [];
 
     for (let i = 0; i < colNbr; i++) {
-      columns.push({id: shortid.generate(), name: `Col-${i + 1}`,tasks: []});
+      columns.push(new Column(`Col-${i + 1}`));
     }
 
     for (let i = 0; i < tasksNbr; i++) {
-      columns[Math.floor(Math.random() * colNbr)].tasks.push({id: shortid.generate(), name: `Task-${i + 1}`});
+      columns[Math.floor(Math.random() * colNbr)].addTask(`Task-${i + 1}`);
     }
 
-    return columns;
+    this.columns = columns;
   };
-}
+};
 
 export const seedBoard = () => {
   return (dispatch, getState) => {
@@ -53,6 +105,7 @@ export const handleTaskDrop = (receiver, dropped) => {
     if (receiver.columnsIndex === dropped.columnsIndex) {
       columns[dropped.columnsIndex].tasks.splice(receiver.tasksIndex - findUpdatedIndex(receiver, dropped, isLast, "tasksIndex"), 0, ...columns[dropped.columnsIndex].tasks.splice(dropped.tasksIndex, 1));
     } else {
+      columns[dropped.columnsIndex].tasks[dropped.tasksIndex].activities.push(new ColumnChange(columns[receiver.columnsIndex].id, "Me"));
       columns[receiver.columnsIndex].tasks.splice(receiver.tasksIndex - (isLast ? -1 : 0), 0, columns[dropped.columnsIndex].tasks[dropped.tasksIndex]);
       columns[dropped.columnsIndex].tasks.splice(dropped.tasksIndex, 1);
     }
@@ -109,6 +162,35 @@ export const handleTaskNameChange = (colId, taskId, name) => {
               return {
                 ...task,
                 name
+              };
+            }
+
+            return task
+          })
+        };
+      }
+
+      return column;
+    });
+
+    dispatch({
+      type: "updateColumns",
+      data: columns
+    });
+  };
+};
+
+export const addComment = (colId, taskId, comment) => {
+  return (dispatch, getState) => {
+    const columns = getState().board.columns.map(column => {
+      if (column.id === colId) {
+        return {
+          ...column,
+          tasks: column.tasks.map(task => {
+            if (task.id === taskId) {
+              return {
+                ...task,
+                activities: [new Comment(comment, "Me"), ...task.activities]
               };
             }
 

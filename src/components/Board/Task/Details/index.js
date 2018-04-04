@@ -9,7 +9,7 @@ import SideMenu from "components/Board/Task/Details/SideMenu";
 import Activity from "components/Board/Task/Details/Activity";
 
 // Other
-import { handleTaskNameChange } from "redux/actions/board";
+import { handleTaskNameChange, addComment } from "redux/actions/board";
 
 @Container({
   isLoading: that => !that.props.column,
@@ -33,7 +33,7 @@ import { handleTaskNameChange } from "redux/actions/board";
         };
       };
     },
-    actions: { handleTaskNameChange }
+    actions: { handleTaskNameChange, addComment }
   }
 })
 class Details extends React.Component {
@@ -51,6 +51,10 @@ class Details extends React.Component {
     }
   };
 
+  handleCommentAddition = comment => {
+    this.props.addComment(this.props.column.id, this.props.task.id, comment);
+  };
+
   render() {
     return (
       <div className="task-details-container">
@@ -59,9 +63,9 @@ class Details extends React.Component {
 
           <div className="menu-container">
             <div className="sections-container">
-              <AddComment />
+              <AddComment addComment={this.handleCommentAddition} />
 
-              <Activity />
+              <Activity activities={this.props.task.activities} />
             </div>
 
             <SideMenu />

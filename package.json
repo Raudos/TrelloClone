@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.22.0",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-data-container": "git+https://github.com/Raudos/ReactDataContainer.git",
