@@ -9,7 +9,7 @@ import ColumnReceiver from "components/Board/Column/ColumnReceiver";
 import BoardDetails from "components/Board/BoardDetails/index";
 
 // Other
-import { handleTaskDrop, handleColumnDrop } from "redux/actions/board";
+import { handleTaskDrop, handleColumnDrop, handleColumnNameChange } from "redux/actions/board";
 
 @DragDropContext(HTML5Backend)
 @Container({
@@ -20,7 +20,7 @@ import { handleTaskDrop, handleColumnDrop } from "redux/actions/board";
     mapStateToProps: (state, ownProps) => ({
       board: state.board
     }),
-    actions: { handleTaskDrop, handleColumnDrop }
+    actions: { handleTaskDrop, handleColumnDrop, handleColumnNameChange }
   }
 })
 class Board extends React.Component {
@@ -39,7 +39,7 @@ class Board extends React.Component {
                 <React.Fragment key={col.id}>
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                  <Column match={match} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
+                  <Column match={match} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
 
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} last />
                 </React.Fragment>
@@ -50,7 +50,7 @@ class Board extends React.Component {
               <React.Fragment key={col.id}>
                 <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                <Column column={col} match={match} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} />
+                <Column column={col} match={match} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
               </React.Fragment>
             );
           })}

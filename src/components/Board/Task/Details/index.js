@@ -8,6 +8,9 @@ import AddComment from "components/Board/Task/Details/AddComment";
 import SideMenu from "components/Board/Task/Details/SideMenu";
 import Activity from "components/Board/Task/Details/Activity";
 
+// Other
+import { handleTaskNameChange } from "redux/actions/board";
+
 @Container({
   isLoading: that => !that.props.column,
   isError: that => that.props.column === null,
@@ -30,7 +33,7 @@ import Activity from "components/Board/Task/Details/Activity";
         };
       };
     },
-    actions: { }
+    actions: { handleTaskNameChange }
   }
 })
 class Details extends React.Component {

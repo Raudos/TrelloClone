@@ -44,13 +44,13 @@ export default props => (
     <h3>Add</h3>
 
     {AddButtons.map(button => (
-      <Button {...button} />
+      <Button key={button.text} {...button} />
     ))}
 
     <h3>Actions</h3>
 
     {ActionButtons.map(button => (
-      <Button {...button} />
+      <Button key={button.text} {...button} />
     ))}
   </div>
 );

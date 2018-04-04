@@ -28,13 +28,17 @@ class Columns extends React.Component {
 		isDragging: PropTypes.bool.isRequired,
   };
 
+	handleNameChange = name => {
+		this.props.handleColumnNameChange(this.props.column.id, name);
+	};
+
   render() {
     const { column, columnsIndex, handleTaskDrop, connectDragSource, isDragging, match } = this.props;
 
     if (isDragging) {
       return connectDragSource(
 				<div className="column dragged">
-					<ColumnTitle title={column.name} />
+					<ColumnTitle title={column.name} updateTitle={this.handleNameChange} />
 
 	        {column.tasks.map((task, index) => {
 	          if (index === column.tasks.length - 1) {
@@ -71,7 +75,7 @@ class Columns extends React.Component {
 
     return connectDragSource(
       <div className="column">
-        <ColumnTitle title={column.name} />
+        <ColumnTitle title={column.name} updateTitle={this.handleNameChange} />
 
         {column.tasks.map((task, index) => {
           if (index === column.tasks.length - 1) {

@@ -77,3 +77,52 @@ export const handleColumnDrop = (receiver, dropped) => {
     });
   };
 };
+
+export const handleColumnNameChange = (id, name) => {
+  return (dispatch, getState) => {
+    const columns = getState().board.columns.map(column => {
+      if (column.id === id) {
+        return {
+          ...column,
+          name
+        };
+      }
+
+      return column;
+    });
+
+    dispatch({
+      type: "updateColumns",
+      data: columns
+    });
+  };
+};
+
+export const handleTaskNameChange = (colId, taskId, name) => {
+  return (dispatch, getState) => {
+    const columns = getState().board.columns.map(column => {
+      if (column.id === colId) {
+        return {
+          ...column,
+          tasks: column.tasks.map(task => {
+            if (task.id === taskId) {
+              return {
+                ...task,
+                name
+              };
+            }
+
+            return task
+          })
+        };
+      }
+
+      return column;
+    });
+
+    dispatch({
+      type: "updateColumns",
+      data: columns
+    });
+  };
+};
