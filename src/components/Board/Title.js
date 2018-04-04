@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default class ColumnTitle extends React.Component {
   constructor(props) {
@@ -29,13 +28,14 @@ export default class ColumnTitle extends React.Component {
 
   render() {
     return (
-      <div className="title">
+      <div className="editable-title">
         <textarea
           style={{height: this.state.height}}
           ref={textarea => this.textarea = textarea}
           value={this.state.title}
           onChange={this.handleChange}
           onFocus={e => e.target.select()}
+          onBlur={e => this.props.updateTitle ? this.props.updateTitle(this.state.title) : null}
         />
       </div>
     );

@@ -1,4 +1,5 @@
 @import '_variables';
+@import '_generic';
 @import '_menu';
 @import '_board';
 @import '_column';
@@ -28,6 +29,13 @@
 };
 
 body {
-      background-image: url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1710/9653e5ff312b477a140e5afbb7f660ec/photo-1461727885569-b2ddec0c4328");
-      background-size: cover;
+  background-image: url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1710/9653e5ff312b477a140e5afbb7f660ec/photo-1461727885569-b2ddec0c4328");
+  background-size: cover;
+  font-size: 14px;
+};
+
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
 };

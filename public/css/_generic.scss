@@ -1,0 +1,78 @@
+/* main: index.scss*/
+
+.user-avatar {
+  padding: 8px;
+  background: #CDD2D4;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4d4d4d;
+};
+
+.button {
+  padding: 5px 16px;
+  display: inline-block;
+  font-weight: 700;
+  border-radius: 3px;
+
+  &.confirm {
+    color: white;
+    background: #519839;
+    cursor: pointer;
+  };
+
+  &.dimmed {
+    color: #4d4d4d;
+    background: white;
+  };
+};
+
+.editable-title {
+  textarea {
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-weight: 700;
+    font-size: 20px;
+    height: 18px;
+    min-height: 18px;
+    resize: none;
+    max-height: 256px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    width: 100%;
+    cursor: pointer;
+
+    &:focus {
+      outline: none !important;
+      border:1px solid blue;
+      box-shadow: 0 0 10px #719ECE;
+      background: white;
+    };
+  };
+};
+
+.section-container {
+  margin-left: 10px;
+  margin-bottom: 10px;
+
+  .main-section {
+    margin-top: 10px;
+  };
+
+  .section-title {
+    display: flex;
+
+    h3 {
+      line-height: 30px;
+    };
+
+    .main-icon {
+      font-size: 20px;
+      margin-right: 10px;
+      line-height: 30px;
+    };
+  }
+};

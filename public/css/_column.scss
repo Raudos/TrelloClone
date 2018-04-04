@@ -24,32 +24,6 @@ $columnWidth: 270px;
         visibility: hidden;
       };
     };
-
-    .title {
-      textarea {
-        background: transparent;
-        border: none;
-        border-radius: 3px;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        font-weight: 700;
-        height: 18px;
-        min-height: 18px;
-        resize: none;
-        max-height: 256px;
-        overflow: hidden;
-        overflow-wrap: break-word;
-        width: 100%;
-        cursor: pointer;
-
-        &:focus {
-          outline: none !important;
-          border:1px solid blue;
-          box-shadow: 0 0 10px #719ECE;
-          background: white;
-        };
-      };
-    };
   };
 
   .receiver-container {

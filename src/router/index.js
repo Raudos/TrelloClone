@@ -3,7 +3,7 @@ import { HashRouter as Router, Route } from "react-router-dom";
 
 // Components
 import Board from "components/Board/index";
-import Task from "components/Board/Task/Details";
+import Task from "components/Board/Task/Details/index";
 
 export default props => (
   <Router>

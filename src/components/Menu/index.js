@@ -3,6 +3,7 @@ import React from 'react';
 // Components
 import Button from "components/Menu/Button";
 import Search from "components/Menu/SearchBar";
+import Avatar from "components/Avatar";
 
 export default props => (
   <header className="menu row">
@@ -27,6 +28,8 @@ export default props => (
       <Button>
         <i className="fas fa-bell no-margin"></i>
       </Button>
+
+      <Avatar />
     </div>
   </header>
 );

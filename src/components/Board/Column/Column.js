@@ -4,7 +4,7 @@ import { DragSource } from 'react-dnd';
 
 import Task from "components/Board/Task/Task";
 import TaskReceiver from "components/Board/Task/TaskReceiver";
-import ColumnTitle from "components/Board/Column/ColumnTitle";
+import ColumnTitle from "components/Board/Title";
 
 const columnSource = {
 	beginDrag(props) {
