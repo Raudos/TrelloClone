@@ -15,6 +15,10 @@
   font-weight: 700;
   border-radius: 3px;
 
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+
   &.confirm {
     color: white;
     background: #519839;
@@ -64,6 +68,7 @@
 
   .section-title {
     display: flex;
+    margin-bottom: 15px;
 
     h3 {
       line-height: 30px;
@@ -75,4 +80,22 @@
       line-height: 30px;
     };
   }
+};
+
+.text-container {
+  flex: 1;
+
+  textarea {
+    width: 100%;
+    background: white;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    resize: none;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    padding: 15px;
+    margin-bottom: 10px;
+  };
 };

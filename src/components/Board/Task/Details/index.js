@@ -9,7 +9,7 @@ import SideMenu from "components/Board/Task/Details/SideMenu";
 import Activity from "components/Board/Task/Details/Activity";
 
 // Other
-import { handleTaskNameChange, addComment } from "redux/actions/board";
+import { handleTaskNameChange, addComment, deleteComment, editComment } from "redux/actions/board";
 
 @Container({
   isLoading: that => !that.props.column,
@@ -33,7 +33,7 @@ import { handleTaskNameChange, addComment } from "redux/actions/board";
         };
       };
     },
-    actions: { handleTaskNameChange, addComment }
+    actions: { handleTaskNameChange, addComment, deleteComment, editComment }
   }
 })
 class Details extends React.Component {
@@ -55,6 +55,14 @@ class Details extends React.Component {
     this.props.addComment(this.props.column.id, this.props.task.id, comment);
   };
 
+  handleCommentDeletion = commentId => {
+    this.props.deleteComment(this.props.column.id, this.props.task.id, commentId);
+  };
+
+  handleCommentEdition = (commentId, newComment) => {
+    this.props.editComment(this.props.column.id, this.props.task.id, commentId, newComment);
+  };
+
   render() {
     return (
       <div className="task-details-container">
@@ -63,9 +71,15 @@ class Details extends React.Component {
 
           <div className="menu-container">
             <div className="sections-container">
-              <AddComment addComment={this.handleCommentAddition} />
+              <AddComment
+                addComment={this.handleCommentAddition}
+              />
 
-              <Activity activities={this.props.task.activities} />
+              <Activity
+                activities={this.props.task.activities}
+                deleteComment={this.handleCommentDeletion}
+                editComment={this.handleCommentEdition}
+              />
             </div>
 
             <SideMenu />

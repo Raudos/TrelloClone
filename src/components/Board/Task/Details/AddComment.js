@@ -7,6 +7,11 @@ export default class AddComment extends React.Component {
     comment: ""
   };
 
+  addComment = () => {
+    this.props.addComment(this.state.comment);
+    this.setState({comment: ""});
+  };
+
   render() {
     return (
       <section className="section-container">
@@ -26,7 +31,7 @@ export default class AddComment extends React.Component {
               onChange={e => this.setState({comment: e.target.value})}
             />
 
-          <div className={`button ${this.state.comment ? "confirm" : "dimmed"}`} onClick={() => this.props.addComment(this.state.comment)}>
+            <div className={`button ${this.state.comment ? "confirm" : "dimmed"}`} onClick={this.addComment}>
               Save
             </div>
           </div>

@@ -1,6 +1,13 @@
 import shortid from "shortid";
 const R = require('ramda');
 
+class User {
+  constructor(name) {
+    this.id = shortid.generate();
+    this.name = name;
+  };
+};
+
 class Activity {
   constructor(type, user) {
     this.id = shortid.generate();
@@ -15,6 +22,7 @@ class Comment extends Activity {
     super("comment", user);
 
     this.comment = comment;
+    this.edited = false;
   };
 };
 
@@ -191,6 +199,74 @@ export const addComment = (colId, taskId, comment) => {
               return {
                 ...task,
                 activities: [new Comment(comment, "Me"), ...task.activities]
+              };
+            }
+
+            return task
+          })
+        };
+      }
+
+      return column;
+    });
+
+    dispatch({
+      type: "updateColumns",
+      data: columns
+    });
+  };
+};
+
+export const deleteComment = (colId, taskId, commentId) => {
+  return (dispatch, getState) => {
+    const columns = getState().board.columns.map(column => {
+      if (column.id === colId) {
+        return {
+          ...column,
+          tasks: column.tasks.map(task => {
+            if (task.id === taskId) {
+              return {
+                ...task,
+                activities: task.activities.filter(activity => activity.id !== commentId)
+              };
+            }
+
+            return task
+          })
+        };
+      }
+
+      return column;
+    });
+
+    dispatch({
+      type: "updateColumns",
+      data: columns
+    });
+  };
+};
+
+export const editComment = (colId, taskId, commentId, newComment) => {
+  return (dispatch, getState) => {
+    const columns = getState().board.columns.map(column => {
+      if (column.id === colId) {
+        return {
+          ...column,
+          tasks: column.tasks.map(task => {
+            if (task.id === taskId) {
+              return {
+                ...task,
+                activities: task.activities.map(activity => {
+                  if (activity.id === commentId) {
+                    return {
+                      ...activity,
+                      edited: true,
+                      comment: newComment
+                    };
+                  }
+
+                  return activity;
+                })
               };
             }
 
