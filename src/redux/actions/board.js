@@ -105,6 +105,18 @@ function findUpdatedIndex(receiver, dropped, isLast, key) {
   return 0;
 };
 
+export const addNewColumn = name => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: "updateColumns",
+      data: [
+        ...getState().board.columns,
+        new Column(name)
+      ]
+    });
+  };
+};
+
 export const handleTaskDrop = (receiver, dropped) => {
   return (dispatch, getState) => {
     const columns = R.clone(getState().board.columns);

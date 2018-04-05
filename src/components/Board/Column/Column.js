@@ -5,6 +5,7 @@ import { DragSource } from 'react-dnd';
 import Task from "components/Board/Task/Task";
 import TaskReceiver from "components/Board/Task/TaskReceiver";
 import ColumnTitle from "components/Board/Title";
+import AddTask from "components/Board/Task/AddTask";
 
 const columnSource = {
 	beginDrag(props) {
@@ -106,6 +107,8 @@ class Columns extends React.Component {
 
           <TaskReceiver columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} dummy />
         }
+
+				<AddTask />
       </div>
     );
   };

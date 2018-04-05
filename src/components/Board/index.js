@@ -7,9 +7,10 @@ import Container from 'react-data-container';
 import Column from "components/Board/Column/Column";
 import ColumnReceiver from "components/Board/Column/ColumnReceiver";
 import BoardDetails from "components/Board/BoardDetails/index";
+import AddColumn from "components/Board/Column/AddColumn";
 
 // Other
-import { handleTaskDrop, handleColumnDrop, handleColumnNameChange } from "redux/actions/board";
+import { handleTaskDrop, handleColumnDrop, handleColumnNameChange, addNewColumn } from "redux/actions/board";
 
 @DragDropContext(HTML5Backend)
 @Container({
@@ -20,7 +21,7 @@ import { handleTaskDrop, handleColumnDrop, handleColumnNameChange } from "redux/
     mapStateToProps: (state, ownProps) => ({
       board: state.board
     }),
-    actions: { handleTaskDrop, handleColumnDrop, handleColumnNameChange }
+    actions: { handleTaskDrop, handleColumnDrop, handleColumnNameChange, addNewColumn }
   }
 })
 class Board extends React.Component {
@@ -32,7 +33,6 @@ class Board extends React.Component {
         <BoardDetails board={board} />
 
         <div className="columns-container">
-
           {board.columns.map((col, index) => {
             if (index === board.columns.length - 1) {
               return (
@@ -54,6 +54,8 @@ class Board extends React.Component {
               </React.Fragment>
             );
           })}
+
+          <AddColumn addNewColumn={this.props.addNewColumn} />
         </div>
       </React.Fragment>
     );
