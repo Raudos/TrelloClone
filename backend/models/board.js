@@ -16,11 +16,7 @@ const BoardSchema = new Schema({
   },
   private: {
     type: Boolean
-  },
-  columns: [{
-    type: Schema.Types.ObjectId,
-    ref: "Column"
-  }]
+  }
 });
 
 const Board = mongoose.model('Board', BoardSchema);

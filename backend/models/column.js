@@ -11,11 +11,7 @@ const ColumnSchema = new Schema({
   board: {
     type: Schema.Types.ObjectId,
     ref: 'Board'
-  },
-  tasks: [{
-    type: Schema.Types.ObjectId,
-    ref: "Task"
-  }]
+  }
 });
 
 const Column = mongoose.model('Column', ColumnSchema);

@@ -5,6 +5,6 @@ const user = require('./routes/user/index');
 
 module.exports = app => {
   app.use("/task", task);
-  // app.use("/board", board);
-  // app.use("/user", user);
+  app.use("/board", board);
+  app.use("/user", user);
 };

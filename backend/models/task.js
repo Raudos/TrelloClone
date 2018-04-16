@@ -15,11 +15,7 @@ const TaskSchema = new Schema({
   column: {
     type: Schema.Types.ObjectId,
     ref: 'Column'
-  },
-  activities: [{
-    type: Schema.Types.ObjectId,
-    ref: "Activity"
-  }]
+  }
 });
 
 const Task = mongoose.model('Task', TaskSchema);
