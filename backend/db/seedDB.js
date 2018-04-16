@@ -10,6 +10,31 @@ const { Task } = require('../models/task');
 
 const { columns, tasks } = argv;
 
+function createBoardStructure(board) {
+  const { columns, tasks } = board;
+  const structure = [];
+
+  columns.forEach(column => {
+    structure.push({
+      id: column._id,
+      tasks: []
+    });
+  });
+
+  tasks.forEach(task => {
+    for (i in structure) {
+      const column = structure[i];
+
+      if (column.id === task.column) {
+        column.tasks.push(task._id);
+        break;
+      }
+    }
+  });
+
+  return structure;
+};
+
 function createTasks(columns) {
   const taskPromises = [];
 
@@ -74,6 +99,25 @@ function createBoard() {
     .then(board => {
       console.log(`New board - ${board.name} creation completed`);
       console.log(`with ${board.columns.length} columns and ${board.tasks.length} tasks.`);
+
+      return board;
+    })
+    .then(board => {
+      return (
+        Board.findById(board._id)
+          .then(filteredBoard => {
+            filteredBoard.structure = createBoardStructure(board);
+
+            return filteredBoard.save();
+          })
+          .catch(e => {
+            console.log(e);
+            console.log("Structure creation failed.");
+          })
+      );
+    })
+    .then(() => {
+      console.log("Seeding and structure creation completed, closing connection to the database.");
 
       mongoose.connection.close();
     })

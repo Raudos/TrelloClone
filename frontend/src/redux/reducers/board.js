@@ -6,7 +6,7 @@ export default (state, action) => {
     case "updateColumns":
       return {
         ...state,
-        columns: action.data
+        structure: action.data
       };
   default:
     return state;

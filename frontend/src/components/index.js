@@ -6,18 +6,18 @@ import Menu from "src/components/Menu/index";
 import Router from "src/router/index";
 
 // Other
-import { seedBoard } from "src/redux/actions/board";
+import { seedBoard, downloadBoard } from "src/redux/actions/board";
 
 @Container({
   isLoading: that => !that.props.loaded,
-  onMount: that => that.props.seedBoard(),
+  onMount: that => that.props.downloadBoard(),
   Error: that => null,
   Loader: that => <div>Loading</div>,
   Redux: {
     mapStateToProps: (state, ownProps) => ({
       loaded: state.loaded
     }),
-    actions: { seedBoard }
+    actions: { seedBoard, downloadBoard }
   }
 })
 class Trello extends React.Component {

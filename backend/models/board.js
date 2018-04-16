@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { ObjectID } = require('mongodb');
+const R = require("ramda");
 
 const BoardSchema = new Schema({
   name: {
@@ -16,6 +18,25 @@ const BoardSchema = new Schema({
   },
   private: {
     type: Boolean
+  },
+  structure: {
+    type: Array,
+    required: true,
+    validate: {
+      validator: structure => {
+        let idsArr = structure.map(column => column.id);
+
+        structure.forEach(column => {
+          idsArr = idsArr.concat(column.tasks)
+        });
+
+        const objFilteredArr = idsArr.filter(id => ObjectID.isValid(id));
+        const uniqArr = R.uniq(idsArr);
+
+        return idsArr.length === objFilteredArr.length && idsArr.length === uniqArr.length;
+      },
+      message: "Wrong structure."
+    }
   }
 });
 

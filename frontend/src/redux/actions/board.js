@@ -1,5 +1,6 @@
 import shortid from "shortid";
 const R = require('ramda');
+import axios from 'axios';
 
 class User {
   constructor(name) {
@@ -83,6 +84,19 @@ class Board {
     }
 
     this.columns = columns;
+  };
+};
+
+export const downloadBoard = () => {
+  return (dispatch, getState) => {
+    axios({
+      url: "http://localhost:3000/board"
+    }).then(res => {
+      dispatch({
+        type: "seedBoard",
+        data: res.data
+      });
+    })
   };
 };
 

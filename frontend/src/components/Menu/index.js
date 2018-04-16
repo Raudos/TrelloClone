@@ -7,7 +7,7 @@ import Avatar from "src/components/Avatar";
 
 export default props => (
   <header className="menu row">
-    <img src="public/assets/images/logo.png" />
+    <img src="frontend/public/assets/images/logo.png" />
 
     <Button>
       <i className="fab fa-trello"></i>

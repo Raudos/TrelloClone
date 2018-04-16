@@ -44,7 +44,7 @@ class Columns extends React.Component {
 	        {column.tasks.map((task, index) => {
 	          if (index === column.tasks.length - 1) {
 	            return (
-	              <React.Fragment key={task.id}>
+	              <React.Fragment key={task._id}>
 	                <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
 	                <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />
@@ -55,7 +55,7 @@ class Columns extends React.Component {
 	          }
 
 	          return (
-	            <React.Fragment key={task.id}>
+	            <React.Fragment key={task._id}>
 	              <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
 	              <Task task={task} match={match} tasksIndex={index} columnsIndex={columnsIndex} />
@@ -81,7 +81,7 @@ class Columns extends React.Component {
         {column.tasks.map((task, index) => {
           if (index === column.tasks.length - 1) {
             return (
-              <React.Fragment key={task.id}>
+              <React.Fragment key={task._id}>
                 <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
                 <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />
@@ -92,7 +92,7 @@ class Columns extends React.Component {
           }
 
           return (
-            <React.Fragment key={task.id}>
+            <React.Fragment key={task._id}>
               <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} />
 
               <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />

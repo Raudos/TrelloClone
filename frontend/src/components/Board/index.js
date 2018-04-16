@@ -33,10 +33,10 @@ class Board extends React.Component {
         <BoardDetails board={board} />
 
         <div className="columns-container">
-          {board.columns.map((col, index) => {
-            if (index === board.columns.length - 1) {
+          {board.structure.map((col, index) => {
+            if (index === board.structure.length - 1) {
               return (
-                <React.Fragment key={col.id}>
+                <React.Fragment key={col._id}>
                   <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
                   <Column match={match} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
@@ -47,7 +47,7 @@ class Board extends React.Component {
             }
 
             return (
-              <React.Fragment key={col.id}>
+              <React.Fragment key={col._id}>
                 <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
                 <Column column={col} match={match} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
