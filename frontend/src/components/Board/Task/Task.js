@@ -37,7 +37,7 @@ export default class Task extends React.Component {
 
 		return connectDragSource(
 			<div className="task break-text">
-				<Link to={`${match.url}${this.props.task.id}`}>
+				<Link to={`${match.url}${this.props.task._id}`}>
 					{this.props.task.name}
 				</Link>
 			</div>

@@ -13,10 +13,10 @@ export default props => (
     <i className="far fa-credit-card task-icon" />
 
     <div className="task-information">
-      <Title title={props.task.name} updateTitle={handleNameChange(props)} />
+      <Title title={props.details.name} updateTitle={handleNameChange(props)} />
 
       <p className="column-title">
-        in list <span>{props.column.name}</span>
+        in list <span>{props.details.column}</span>
       </p>
     </div>
 

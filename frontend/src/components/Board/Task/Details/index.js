@@ -9,31 +9,23 @@ import SideMenu from "src/components/Board/Task/Details/SideMenu";
 import Activity from "src/components/Board/Task/Details/Activity";
 
 // Other
-import { handleTaskNameChange, addComment, deleteComment, editComment } from "src/redux/actions/board";
+import { handleTaskNameChange, addComment, deleteComment, editComment, downloadTaskDetails } from "src/redux/actions/board";
 
 @Container({
-  isLoading: that => !that.props.column,
+  onMount: that => that.props.downloadTaskDetails(that.props.match.params.id),
+  isLoading: that => !that.props.details,
   isError: that => that.props.column === null,
   Error: that => null,
   Loader: that => <div>Loading</div>,
   Redux: {
     mapStateToProps: (state, ownProps) => {
-      try {
-        const taskId = ownProps.match.params.id;
-        const column = state.board.columns.filter(column => column.tasks.filter(task => task.id === taskId).length)[0];
-        const task = column.tasks.filter(task => task.id === taskId)[0];
+      const id = ownProps.match.params.id;
 
-        return {
-          column,
-          task
-        };
-      } catch(e) {
-        return {
-          column: null
-        };
+      return {
+        details: state.taskDetails[id]
       };
     },
-    actions: { handleTaskNameChange, addComment, deleteComment, editComment }
+    actions: { handleTaskNameChange, addComment, deleteComment, editComment, downloadTaskDetails }
   }
 })
 class Details extends React.Component {
@@ -52,15 +44,15 @@ class Details extends React.Component {
   };
 
   handleCommentAddition = comment => {
-    this.props.addComment(this.props.column.id, this.props.task.id, comment);
+    //this.props.addComment(this.props.column.id, this.props.task.id, comment);
   };
 
   handleCommentDeletion = commentId => {
-    this.props.deleteComment(this.props.column.id, this.props.task.id, commentId);
+    //this.props.deleteComment(this.props.column.id, this.props.task.id, commentId);
   };
 
   handleCommentEdition = (commentId, newComment) => {
-    this.props.editComment(this.props.column.id, this.props.task.id, commentId, newComment);
+    //this.props.editComment(this.props.column.id, this.props.task.id, commentId, newComment);
   };
 
   render() {
@@ -76,7 +68,7 @@ class Details extends React.Component {
               />
 
               <Activity
-                activities={this.props.task.activities}
+                activities={[]}
                 deleteComment={this.handleCommentDeletion}
                 editComment={this.handleCommentEdition}
               />

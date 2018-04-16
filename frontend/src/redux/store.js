@@ -6,7 +6,8 @@ import thunk from "redux-thunk";
 import combineReducer from 'src/redux/reducers/index';
 
 const initialStoreObj = {
-  board: null
+  board: null,
+  taskDetails: {}
 };
 
 export const initialStore = initialStoreObj;

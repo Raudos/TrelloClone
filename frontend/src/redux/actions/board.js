@@ -87,6 +87,19 @@ class Board {
   };
 };
 
+export const downloadTaskDetails = id => {
+  return (dispatch, getState) => {
+    axios({
+      url: `http://localhost:3000/task/details/${id}`
+    }).then(res => {
+      dispatch({
+        type: "downloadTaskDetails",
+        data: res.data.task
+      });
+    })
+  };
+};
+
 export const downloadBoard = () => {
   return (dispatch, getState) => {
     axios({
