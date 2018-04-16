@@ -6,10 +6,10 @@ module.exports = {
   mode: "development",
   entry: [
     'babel-polyfill',
-    './src/index.js'
+    './frontend/src/index.js'
   ],
   output: {
-    path: __dirname,
+    path: __dirname + "/frontend/",
     filename: (process.env.NODE_ENV === "production") ? "index_bundle-[hash:6].js" : "index_bundle.js"
   },
   module: {
@@ -24,14 +24,10 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: __dirname + '/index.html'
-    }),
-    new webpack.DefinePlugin({
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      BACKEND: JSON.stringify(process.env.BACKEND)
+      template: __dirname + '/frontend/index.html'
     })
   ],
   resolve: {
-    modules: [path.resolve("./src"), "./node_modules"]
+    modules: [path.resolve("./frontend"), "./node_modules"]
   }
 };

@@ -4,13 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-frontend": "webpack-dev-server",
+    "start-backend": "node backend/index.js",
+    "start-backend-watch": "nodemon backend/index.js",
+    "test-frontend": "jest frontend/tests/*",
+    "test-backend": "NODE_ENV=Test jest backend/tests/*"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
     "moment": "^2.22.0",
+    "mongodb": "^3.0.6",
+    "mongoose": "^5.0.14",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-data-container": "git+https://github.com/Raudos/ReactDataContainer.git",
