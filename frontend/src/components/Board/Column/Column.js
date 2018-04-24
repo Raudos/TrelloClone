@@ -86,7 +86,7 @@ class Columns extends React.Component {
 
                 <Task match={match} task={task} tasksIndex={index} columnsIndex={columnsIndex} />
 
-                <TaskReceiver associatedTask={task} tasksIndex={index} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} last />
+                <TaskReceiver associatedTask={task} tasksIndex={index + 1} columnsIndex={columnsIndex} handleTaskDrop={handleTaskDrop} last />
               </React.Fragment>
             );
           }

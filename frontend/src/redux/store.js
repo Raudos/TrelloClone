@@ -7,7 +7,8 @@ import combineReducer from 'src/redux/reducers/index';
 
 const initialStoreObj = {
   board: null,
-  taskDetails: {}
+  taskDetails: {},
+  socket: null
 };
 
 export const initialStore = initialStoreObj;

@@ -2,6 +2,9 @@ import shortid from "shortid";
 const R = require('ramda');
 import axios from 'axios';
 
+// Logic
+const { handleTaskMovement } = require("../../../../sharedLogic/updateStructure");
+
 class User {
   constructor(name) {
     this.id = shortid.generate();
@@ -146,20 +149,34 @@ export const addNewColumn = name => {
 
 export const handleTaskDrop = (receiver, dropped) => {
   return (dispatch, getState) => {
-    const columns = R.clone(getState().board.columns);
-    const isLast = receiver.last;
-
-    if (receiver.columnsIndex === dropped.columnsIndex) {
-      columns[dropped.columnsIndex].tasks.splice(receiver.tasksIndex - findUpdatedIndex(receiver, dropped, isLast, "tasksIndex"), 0, ...columns[dropped.columnsIndex].tasks.splice(dropped.tasksIndex, 1));
-    } else {
-      columns[dropped.columnsIndex].tasks[dropped.tasksIndex].activities.push(new ColumnChange(columns[receiver.columnsIndex].id, "Me"));
-      columns[receiver.columnsIndex].tasks.splice(receiver.tasksIndex - (isLast ? -1 : 0), 0, columns[dropped.columnsIndex].tasks[dropped.tasksIndex]);
-      columns[dropped.columnsIndex].tasks.splice(dropped.tasksIndex, 1);
-    }
+    const updatedStructure = handleTaskMovement(getState().board.structure, receiver, dropped);
 
     dispatch({
       type: "updateColumns",
-      data: columns
+      data: updatedStructure
+    });
+
+    axios({
+      method: "PUT",
+      data: {
+        boardId: getState().board._id,
+        updatedStructure,
+        socketId: getState().socket.id
+      },
+      url: "http://localhost:3000/board/moveTask"
+    }).then(data => {
+      console.log(data);
+    }).catch(e => {
+      console.log(e);
+    })
+  };
+};
+
+export const updateBoardStructure = newStructure => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: "updateColumns",
+      data: newStructure
     });
   };
 };
