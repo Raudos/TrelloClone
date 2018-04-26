@@ -58,7 +58,7 @@ export const handleTaskDrop = (receiver, dropped) => {
         boardId: getState().board._id,
         socketId: getState().socket.id,
         movementData: {
-          movedTaskId: dropped.task._id,
+          movedTaskId: dropped.taskId,
           destination: {
             columnsIndex: receiver.columnsIndex,
             tasksIndex: receiver.tasksIndex || 0
@@ -67,6 +67,7 @@ export const handleTaskDrop = (receiver, dropped) => {
       },
       url: "http://localhost:3000/board/moveTask"
     }).then(data => {
+      console.log("VKJDBVKJDSBHVJDSBHJVBDSJVBHJDS");
       console.log(data);
     }).catch(e => {
       console.log(e);
@@ -98,7 +99,7 @@ export const handleColumnDrop = (receiver, dropped) => {
         boardId: getState().board._id,
         socketId: getState().socket.id,
         movementData: {
-          movedColumnId: dropped.column._id,
+          movedColumnId: dropped.columnId,
           destination: {
             columnsIndex: receiver.columnsIndex
           }

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { DragSource } from 'react-dnd';
 import { Link } from "react-router-dom";
+import Container from 'react-data-container';
 
 const taskSource = {
 	beginDrag(props) {
@@ -14,10 +15,21 @@ function collect(connect, monitor) {
 		connectDragSource: connect.dragSource(),
 		connectDragPreview: connect.dragPreview(),
 		isDragging: monitor.isDragging(),
-	}
-}
+	};
+};
 
 @DragSource('task', taskSource, collect)
+@Container({
+	isLoading: that => !that.props.task,
+  Error: that => null,
+  Loader: that => <div>Loading</div>,
+  Redux: {
+    mapStateToProps: (state, ownProps) => ({
+      task: state.tasks[ownProps.taskId]
+    }),
+    actions: { }
+  }
+})
 export default class Task extends React.Component {
   static propTypes = {
 		connectDragSource: PropTypes.func.isRequired,

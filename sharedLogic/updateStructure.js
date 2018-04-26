@@ -7,9 +7,9 @@ function findUpdatedIndex(receiver, dropped, key) {
 };
 
 function handleTaskMovement(structure, receiver, dropped) {
-  const shallowStructure = structure.concat();
-  const droppedColumn = shallowStructure[dropped.columnsIndex];
-  const receiverColumn = shallowStructure[receiver.columnsIndex];
+  const clonedStructure = JSON.parse(JSON.stringify(structure));
+  const droppedColumn = clonedStructure[dropped.columnsIndex];
+  const receiverColumn = clonedStructure[receiver.columnsIndex];
 
   if (receiver.columnsIndex === dropped.columnsIndex) {
     droppedColumn.tasks.splice(receiver.tasksIndex + findUpdatedIndex(receiver, dropped, "tasksIndex"), 0, ...droppedColumn.tasks.splice(dropped.tasksIndex, 1));
@@ -18,7 +18,7 @@ function handleTaskMovement(structure, receiver, dropped) {
     droppedColumn.tasks.splice(dropped.tasksIndex, 1);
   }
 
-  return shallowStructure;
+  return clonedStructure;
 };
 
 function handleColumnMovement(structure, receiver, dropped) {

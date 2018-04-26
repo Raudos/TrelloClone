@@ -28,7 +28,7 @@ function fillStructureWithData(structure, columns, tasks) {
   const copiedStructure = structure.concat();
   // Multiple queries vs this ...?
   return structure.map(structualColumn => ({
-    ...columns.filter(column => column._id.equals(structualColumn.id))[0]._doc,
+    ...columns.filter(column => column._id.equals(structualColumn._id))[0]._doc,
     tasks: structualColumn.tasks.map(taskId => {
 
       return tasks.filter(task => task._id.equals(taskId.toString()))[0]
@@ -40,7 +40,7 @@ router.get("/", (req, res) => {
   // For now
   Board.find().then(boards => {
     const board = boards[0];
-    const columnIds = board.structure.map(column => column.id);
+    const columnIds = board.structure.map(column => column._id);
     const taskIds = R.flatten(board.structure.map(column => column.tasks));
 
     Promise.all([getColumns(columnIds), getTasks(taskIds)])
@@ -77,7 +77,7 @@ function findTasksPosition(structure, taskId) {
 };
 
 function findColumnsPosition(structure, columnId) {
-  const columnsIndex = structure.findIndex(column => column.id.equals(columnId));
+  const columnsIndex = structure.findIndex(column => column._id.equals(columnId));
 
   if (columnsIndex >= 0) {
     return {
@@ -89,14 +89,25 @@ function findColumnsPosition(structure, columnId) {
   throw "Column doesnt exist!";
 };
 
+function ensureObjectIds(structure) {
+  return structure.map(column => ({
+    _id: typeof column._id === "string" ? ObjectID(column._id) : column._id,
+    tasks: column.tasks.map(taskId => {
+      return (typeof taskId === "string" ? ObjectID(taskId) : taskId);
+    })
+  }));
+};
+
 function updateBoardStructure(res, boardId, socketId, newStructure) {
-  Board.update({_id: boardId}, { $set: { structure: newStructure }})
+  const confirmedStructure = ensureObjectIds(newStructure);
+
+  Board.update({_id: boardId}, { $set: { structure: confirmedStructure }})
     .then(data => {
       res.status(200).send({status: "updated"});
 
       io.emit("updateStructure", {
         socketId: socketId,
-        structure: newStructure
+        structure: confirmedStructure
       });
     })
     .catch(e => {

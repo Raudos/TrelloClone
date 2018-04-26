@@ -24,7 +24,7 @@ const BoardSchema = new Schema({
     required: true,
     validate: {
       validator: structure => {
-        let idsArr = structure.map(column => column.id);
+        let idsArr = structure.map(column => column._id);
 
         structure.forEach(column => {
           idsArr = idsArr.concat(column.tasks)

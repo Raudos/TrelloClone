@@ -34,23 +34,38 @@ class Board extends React.Component {
 
         <div className="columns-container">
           {board.structure.map((col, index) => {
+          
             if (index === board.structure.length - 1) {
               return (
                 <React.Fragment key={col._id}>
-                  <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
+                  <ColumnReceiver columnId={col._id} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                  <Column match={match} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
+                  <Column
+                    match={match}
+                    columnId={col._id}
+                    tasks={col.tasks}
+                    columnsIndex={index}
+                    handleTaskDrop={this.props.handleTaskDrop}
+                    handleColumnNameChange={this.props.handleColumnNameChange}
+                  />
 
-                  <ColumnReceiver column={col} columnsIndex={index + 1} handleColumnDrop={this.props.handleColumnDrop} last />
+                  <ColumnReceiver columnId={col._id} columnsIndex={index + 1} handleColumnDrop={this.props.handleColumnDrop} last />
                 </React.Fragment>
               );
             }
 
             return (
               <React.Fragment key={col._id}>
-                <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
+                <ColumnReceiver columnId={col._id} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} />
 
-                <Column column={col} match={match} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
+                <Column
+                  match={match}
+                  columnId={col._id}
+                  tasks={col.tasks}
+                  columnsIndex={index}
+                  handleTaskDrop={this.props.handleTaskDrop}
+                  handleColumnNameChange={this.props.handleColumnNameChange}
+                />
               </React.Fragment>
             );
           })}

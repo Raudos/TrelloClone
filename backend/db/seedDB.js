@@ -16,7 +16,7 @@ function createBoardStructure(board) {
 
   columns.forEach(column => {
     structure.push({
-      id: column._id,
+      _id: column._id,
       tasks: []
     });
   });
@@ -25,7 +25,7 @@ function createBoardStructure(board) {
     for (i in structure) {
       const column = structure[i];
 
-      if (column.id === task.column) {
+      if (column._id === task.column) {
         column.tasks.push(task._id);
         break;
       }
