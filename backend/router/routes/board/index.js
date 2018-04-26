@@ -10,6 +10,7 @@ const { Column } = require("../../../models/column");
 const { Task } = require("../../../models/task");
 
 // Other
+const { handleTaskMovement, handleColumnMovement } = require("../../../../sharedLogic/updateStructure");
 
 function getTasks(idsArr) {
   return Task.find({
@@ -59,38 +60,78 @@ router.get('/details/:id', (req, res) => {
 
 });
 
-function parseReceivedStructure(structure) {
-  const parsedStructure = R.clone(structure);
+function findTasksPosition(structure, taskId) {
+  for(let i = 0; i < structure.length; i++) {
+    const tasksIndex = structure[i].tasks.findIndex(id => id.equals(taskId));
 
-  parsedStructure.forEach(column => {
-    // Is it even different ?????
-    column.id = ObjectID(column._id);
-    column.tasks = column.tasks.map(task => ObjectID(task._id));
+    if (tasksIndex >= 0) {
+      return {
+        columnsIndex: i,
+        tasksIndex
+      };
+    }
+  }
 
-    delete column._id;
-    delete column.name;
-    delete column.board;
-    delete column.__v;
-  });
-
-  return parsedStructure;
+  // TODO handle this error
+  throw "Task doesnt exist!";
 };
 
-router.put('/moveTask', (req, res) => {
-  const newStructure = parseReceivedStructure(req.body.updatedStructure);
+function findColumnsPosition(structure, columnId) {
+  const columnsIndex = structure.findIndex(column => column.id.equals(columnId));
 
-  Board.update({_id: req.body.boardId}, { $set: { structure: newStructure }})
+  if (columnsIndex >= 0) {
+    return {
+      columnsIndex
+    };
+  }
+
+  // TODO handle this error
+  throw "Column doesnt exist!";
+};
+
+function updateBoardStructure(res, boardId, socketId, newStructure) {
+  Board.update({_id: boardId}, { $set: { structure: newStructure }})
     .then(data => {
       res.status(200).send({status: "updated"});
 
       io.emit("updateStructure", {
-        socketId: req.body.socketId,
-        structure: req.body.updatedStructure
+        socketId: socketId,
+        structure: newStructure
       });
     })
     .catch(e => {
       res.status(400).send(e);
     })
+};
+
+router.put('/moveTask', (req, res) => {
+  Board.findById(req.body.boardId)
+    .then(board => {
+      // Based on provided id find tasks column and its position within it
+      const movedTaskPosition = findTasksPosition(board.structure, req.body.movementData.movedTaskId);
+      // Update structure based on moved tasks position and place of a receiver
+      const newStructure = handleTaskMovement(board.structure, req.body.movementData.destination, movedTaskPosition);
+
+      updateBoardStructure(res, req.body.boardId, req.body.socketId, newStructure);
+    })
+    .catch(e => {
+      console.log(e);
+    })
+});
+
+router.put('/moveColumn', (req, res) => {
+  Board.findById(req.body.boardId)
+    .then(board => {
+      // Based on provided id find columns position
+      const movedColumnsPosition = findColumnsPosition(board.structure, req.body.movementData.movedColumnId);
+      // Update structure based on moved columns position and place of a receiver
+      const newStructure = handleColumnMovement(board.structure, req.body.movementData.destination, movedColumnsPosition);
+
+      updateBoardStructure(res, req.body.boardId, req.body.socketId, newStructure);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 });
 
 router.get('/createBoard', (req, res) => {

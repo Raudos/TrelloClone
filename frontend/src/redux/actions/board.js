@@ -3,92 +3,7 @@ const R = require('ramda');
 import axios from 'axios';
 
 // Logic
-const { handleTaskMovement } = require("../../../../sharedLogic/updateStructure");
-
-class User {
-  constructor(name) {
-    this.id = shortid.generate();
-    this.name = name;
-  };
-};
-
-class Activity {
-  constructor(type, user) {
-    this.id = shortid.generate();
-    this.type = type;
-    this.date = new Date();
-    this.user = user;
-  };
-};
-
-class Comment extends Activity {
-  constructor(comment, user) {
-    super("comment", user);
-
-    this.comment = comment;
-    this.edited = false;
-  };
-};
-
-class ColumnChange extends Activity {
-  constructor(columnId, user) {
-    super("columnChange", user);
-
-    this.columnId = columnId;
-  };
-};
-
-class Task {
-  constructor(name, columnId) {
-    this.id = shortid.generate();
-    this.name = name;
-    this.activities = [new ColumnChange(columnId, "Me")];
-  };
-
-  addActivity(newActivity) {
-    if (newActivity instanceof Activity) {
-      this.activities.unshift(newActivity);
-    }
-  };
-};
-
-class Column {
-  constructor(name) {
-    this.id = shortid.generate();
-    this.name = name;
-    this.tasks = [];
-  };
-
-  addTask(name, columnId) {
-    this.tasks.push(new Task(name, this.id));
-  };
-};
-
-class Board {
-  constructor(name, colNbr, tasksNbr) {
-    this.id = shortid.generate();
-    this.name = name || "Board";
-    this.fav = false;
-    this.personal = true;
-    this.private = true;
-
-    this.seedColumns(colNbr, tasksNbr);
-  };
-
-  seedColumns = (colNbr, tasksNbr) => {
-    const columns = [];
-
-    for (let i = 0; i < colNbr; i++) {
-      columns.push(new Column(`Col-${i + 1}`));
-    }
-
-    for (let i = 0; i < tasksNbr; i++) {
-      columns[Math.floor(Math.random() * colNbr)].addTask(`Task-${i + 1}`);
-    }
-
-    this.columns = columns;
-  };
-};
+const { handleTaskMovement, handleColumnMovement } = require("../../../../sharedLogic/updateStructure");
 
 export const downloadTaskDetails = id => {
   return (dispatch, getState) => {
@@ -116,25 +31,6 @@ export const downloadBoard = () => {
   };
 };
 
-export const seedBoard = () => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: "seedBoard",
-      data: new Board("My Board", 5, 8)
-    });
-  };
-};
-
-function findUpdatedIndex(receiver, dropped, isLast, key) {
-  if (isLast) {
-    return -1;
-  } else if (dropped[key] < receiver[key]) {
-    return 1;
-  }
-
-  return 0;
-};
-
 export const addNewColumn = name => {
   return (dispatch, getState) => {
     dispatch({
@@ -160,8 +56,14 @@ export const handleTaskDrop = (receiver, dropped) => {
       method: "PUT",
       data: {
         boardId: getState().board._id,
-        updatedStructure,
-        socketId: getState().socket.id
+        socketId: getState().socket.id,
+        movementData: {
+          movedTaskId: dropped.task._id,
+          destination: {
+            columnsIndex: receiver.columnsIndex,
+            tasksIndex: receiver.tasksIndex || 0
+          }
+        }
       },
       url: "http://localhost:3000/board/moveTask"
     }).then(data => {
@@ -183,15 +85,31 @@ export const updateBoardStructure = newStructure => {
 
 export const handleColumnDrop = (receiver, dropped) => {
   return (dispatch, getState) => {
-    const columns = R.clone(getState().board.columns);
-    const isLast = receiver.last;
-
-    columns.splice(receiver.columnsIndex - findUpdatedIndex(receiver, dropped, isLast, "columnsIndex"), 0, ...columns.splice(dropped.columnsIndex, 1));
+    const updatedStructure = handleColumnMovement(getState().board.structure, receiver, dropped);
 
     dispatch({
       type: "updateColumns",
-      data: columns
+      data: updatedStructure
     });
+
+    axios({
+      method: "PUT",
+      data: {
+        boardId: getState().board._id,
+        socketId: getState().socket.id,
+        movementData: {
+          movedColumnId: dropped.column._id,
+          destination: {
+            columnsIndex: receiver.columnsIndex
+          }
+        }
+      },
+      url: "http://localhost:3000/board/moveColumn"
+    }).then(data => {
+      console.log(data);
+    }).catch(e => {
+      console.log(e);
+    })
   };
 };
 

@@ -7,9 +7,9 @@ function findUpdatedIndex(receiver, dropped, key) {
 };
 
 function handleTaskMovement(structure, receiver, dropped) {
-  const clonedStructure = structure.concat();
-  const droppedColumn = clonedStructure[dropped.columnsIndex];
-  const receiverColumn = clonedStructure[receiver.columnsIndex];
+  const shallowStructure = structure.concat();
+  const droppedColumn = shallowStructure[dropped.columnsIndex];
+  const receiverColumn = shallowStructure[receiver.columnsIndex];
 
   if (receiver.columnsIndex === dropped.columnsIndex) {
     droppedColumn.tasks.splice(receiver.tasksIndex + findUpdatedIndex(receiver, dropped, "tasksIndex"), 0, ...droppedColumn.tasks.splice(dropped.tasksIndex, 1));
@@ -18,9 +18,18 @@ function handleTaskMovement(structure, receiver, dropped) {
     droppedColumn.tasks.splice(dropped.tasksIndex, 1);
   }
 
-  return clonedStructure;
+  return shallowStructure;
+};
+
+function handleColumnMovement(structure, receiver, dropped) {
+  const shallowStructure = structure.concat();
+
+  shallowStructure.splice(receiver.columnsIndex + findUpdatedIndex(receiver, dropped, "columnsIndex"), 0, ...shallowStructure.splice(dropped.columnsIndex, 1));
+
+  return shallowStructure;
 };
 
 module.exports = {
-  handleTaskMovement
+  handleTaskMovement,
+  handleColumnMovement
 };

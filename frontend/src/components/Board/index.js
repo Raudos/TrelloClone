@@ -41,7 +41,7 @@ class Board extends React.Component {
 
                   <Column match={match} column={col} columnsIndex={index} handleTaskDrop={this.props.handleTaskDrop} handleColumnNameChange={this.props.handleColumnNameChange} />
 
-                  <ColumnReceiver column={col} columnsIndex={index} handleColumnDrop={this.props.handleColumnDrop} last />
+                  <ColumnReceiver column={col} columnsIndex={index + 1} handleColumnDrop={this.props.handleColumnDrop} last />
                 </React.Fragment>
               );
             }
