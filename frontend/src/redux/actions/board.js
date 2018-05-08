@@ -67,7 +67,6 @@ export const handleTaskDrop = (receiver, dropped) => {
       },
       url: "http://localhost:3000/board/moveTask"
     }).then(data => {
-      console.log("VKJDBVKJDSBHVJDSBHJVBDSJVBHJDS");
       console.log(data);
     }).catch(e => {
       console.log(e);
